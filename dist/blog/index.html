@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.15.9"><!-- <link rel="preload" as="image" href={src} alt="Hero" /> --><title>Blog | Astroship</title><link rel="canonical" href="https://astroship.web3templates.com/blog/"><meta name="description" content="Astroship is a starter website template for Astro built with TailwindCSS."><meta name="robots" content="index, follow"><meta property="og:title" content="Astroship - Starter Template for Astro"><meta property="og:type" content="website"><meta property="og:image" content="https://astroship.web3templates.com/opengraph.jpg"><meta property="og:url" content="https://astroship.web3templates.com/blog/"><meta property="og:image:url" content="https://astroship.web3templates.com/opengraph.jpg"><meta property="og:image:alt" content="Astroship Homepage Screenshot"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@web3templates"><meta name="twitter:creator" content="@surjithctly"><link rel="stylesheet" href="/_astro/about.D_KvUUYP.css"></head> <body> <div class="max-w-screen-xl mx-auto px-5">  <header class="flex flex-col lg:flex-row justify-between items-center my-5">  <div class="flex w-full lg:w-auto items-center justify-between"> <a href="/" class="text-lg"><span class="font-bold text-slate-800">Ponto.</span><spanclass=>Noticia</spanclass=></a> <div class="block lg:hidden"> <button id="astronav-menu" aria-label="Toggle Menu">  <svg fill="currentColor" class="w-4 h-4 text-gray-800" width="24" height="24" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"> <title>Toggle Menu</title> <path class="astronav-close-icon astronav-toggle hidden" fill-rule="evenodd" clip-rule="evenodd" d="M18.278 16.864a1 1 0 01-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 01-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 011.414-1.414l4.829 4.828 4.828-4.828a1 1 0 111.414 1.414l-4.828 4.829 4.828 4.828z"></path> <path class="astronav-open-icon astronav-toggle" fill-rule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"></path> </svg>  </button> </div> </div> <nav class="astronav-items astronav-toggle hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">  <ul class="flex flex-col lg:flex-row lg:gap-3"> <li> <a href="/blog" class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900"> <span> Notícias</span>  </a> </li><li> <a href="/about" class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900"> <span> Sobre</span>  </a> </li> </ul>  </nav>  <script>(function(){const closeOnClick = false;
+
+["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+  document.addEventListener(event, addListeners);
+});
+
+// Function to clone and replace elements
+function cloneAndReplace(element) {
+  const clone = element.cloneNode(true);
+  element.parentNode.replaceChild(clone, element);
+}
+
+function addListeners() {
+  // Clean up existing listeners
+  const oldMenuButton = document.getElementById("astronav-menu");
+  if (oldMenuButton) {
+    cloneAndReplace(oldMenuButton);
+  }
+
+  const oldDropdownMenus = document.querySelectorAll(".astronav-dropdown");
+  oldDropdownMenus.forEach((menu) => {
+    cloneAndReplace(menu);
+  });
+
+  // Mobile nav toggle
+  const menuButton = document.getElementById("astronav-menu");
+  menuButton && menuButton.addEventListener("click", toggleMobileNav);
+
+  // Dropdown menus
+  const dropdownMenus = document.querySelectorAll(".astronav-dropdown");
+  dropdownMenus.forEach((menu) => {
+    const button = menu.querySelector("button");
+    button &&
+      button.addEventListener("click", (event) =>
+        toggleDropdownMenu(event, menu, dropdownMenus)
+      );
+
+    // Handle Submenu Dropdowns
+    const dropDownSubmenus = menu.querySelectorAll(
+      ".astronav-dropdown-submenu"
+    );
+
+    dropDownSubmenus.forEach((submenu) => {
+      const submenuButton = submenu.querySelector("button");
+      submenuButton &&
+        submenuButton.addEventListener("click", (event) => {
+          event.stopImmediatePropagation();
+          toggleSubmenuDropdown(event, submenu);
+        });
+    });
+  });
+
+  // Clicking away from dropdown will remove the dropdown class
+  document.addEventListener("click", closeAllDropdowns);
+
+  if (closeOnClick) {
+    handleCloseOnClick();
+  }
+}
+
+function toggleMobileNav() {
+  [...document.querySelectorAll(".astronav-toggle")].forEach((el) => {
+    el.classList.toggle("hidden");
+  });
+}
+
+function toggleDropdownMenu(event, menu, dropdownMenus) {
+  toggleMenu(menu);
+
+  // Close one dropdown when selecting another
+  Array.from(dropdownMenus)
+    .filter((el) => el !== menu && !menu.contains(el))
+    .forEach(closeMenu);
+
+  event.stopPropagation();
+}
+
+function toggleSubmenuDropdown(event, submenu) {
+  event.stopPropagation();
+  toggleMenu(submenu);
+
+  // Close sibling submenus at the same nesting level
+  const siblingSubmenus = submenu
+    .closest(".astronav-dropdown")
+    .querySelectorAll(".astronav-dropdown-submenu");
+  Array.from(siblingSubmenus)
+    .filter((el) => el !== submenu && !submenu.contains(el))
+    .forEach(closeMenu);
+}
+
+function closeAllDropdowns(event) {
+  const dropdownMenus = document.querySelectorAll(".dropdown-toggle");
+  const dropdownParent = document.querySelectorAll(
+    ".astronav-dropdown, .astronav-dropdown-submenu"
+  );
+  const isButtonInsideDropdown = [
+    ...document.querySelectorAll(
+      ".astronav-dropdown button, .astronav-dropdown-submenu button, #astronav-menu"
+    ),
+  ].some((button) => button.contains(event.target));
+  if (!isButtonInsideDropdown) {
+    dropdownMenus.forEach((d) => {
+      // console.log("I ran", d);
+      // if (!d.contains(event.target)) {
+      d.classList.remove("open");
+      d.removeAttribute("open");
+      d.classList.add("hidden");
+      // }
+    });
+    dropdownParent.forEach((d) => {
+      d.classList.remove("open");
+      d.removeAttribute("open");
+      d.setAttribute("aria-expanded", "false");
+    });
+  }
+}
+
+function toggleMenu(menu) {
+  menu.classList.toggle("open");
+  const expanded = menu.getAttribute("aria-expanded") === "true";
+  menu.setAttribute("aria-expanded", expanded ? "false" : "true");
+  menu.hasAttribute("open")
+    ? menu.removeAttribute("open")
+    : menu.setAttribute("open", "");
+
+  const dropdownToggle = menu.querySelector(".dropdown-toggle");
+  const dropdownExpanded = dropdownToggle.getAttribute("aria-expanded");
+  dropdownToggle.classList.toggle("hidden");
+  dropdownToggle.setAttribute(
+    "aria-expanded",
+    dropdownExpanded === "true" ? "false" : "true"
+  );
+}
+
+function closeMenu(menu) {
+  // console.log("closing", menu);
+  menu.classList.remove("open");
+  menu.removeAttribute("open");
+  menu.setAttribute("aria-expanded", "false");
+  const dropdownToggles = menu.querySelectorAll(".dropdown-toggle");
+  dropdownToggles.forEach((toggle) => {
+    toggle.classList.add("hidden");
+    toggle.setAttribute("aria-expanded", "false");
+  });
+}
+
+function handleCloseOnClick() {
+  const navMenuItems = document.querySelector(".astronav-items");
+  const navToggle = document.getElementById("astronav-menu");
+  const navLink = navMenuItems && navMenuItems.querySelectorAll("a");
+
+  const MenuIcons = navToggle.querySelectorAll(".astronav-toggle");
+
+  navLink &&
+    navLink.forEach((item) => {
+      item.addEventListener("click", () => {
+        navMenuItems?.classList.add("hidden");
+        MenuIcons.forEach((el) => {
+          el.classList.toggle("hidden");
+        });
+      });
+    });
+}
+})();</script> </header>  </div>  <div class="max-w-screen-xl mx-auto px-5">  <div class="mt-16 text-center"> <h1 class="text-4xl lg:text-5xl font-bold lg:tracking-tight"> Notícias </h1> <p class="text-lg mt-4 text-slate-600"> Confira as principais e mais recentes notícias em Portugal </p> </div> <main class="mt-16"> <ul class="grid gap-16 max-w-4xl mx-auto"> <li> <a href="/blog/undefined"></a><div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center"><a href="/blog/undefined"> <img src="https://bordalo.observador.pt/v2/q:60/rs:fill:640/c:1578:885:nowe:88:0/plain/https://s3.observador.pt/wp-content/uploads/2024/03/27102348/42584434.jpg" alt="Orçamento. Exigências de sigilo crisparam ambiente" sizes="(max-width: 800px) 100vw, 800px" width="800" height="600" loading="eager" decoding="sync" class="w-full rounded-md object-cover object-center bg-white"> </a><div><a href="/blog/undefined"></a><a href="https://observador.pt/" class="text-blue-400 uppercase tracking-wider text-sm font-medium"> Observador </a> <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1"> Orçamento. Exigências de sigilo crisparam ambiente </h2> <p class="text-gray-500"> Foram precisas três tentativas para marcar reunião entre Montenegro e Pedro Nuno. Socialista rejeitou uma vez e não gostou do secretismo à segunda. Primeiro-ministro diz que esteve 23 dias à espera. </p> <div class="flex gap-2 mt-3"> <a href="https://observador.pt/especiais/exigencias-de-sigilo-crisparam-ambiente-entre-pedro-nuno-e-montenegro/" class="text-gray-400" target="_blank">
+Ler Notícia
+</a> </div> </div> </div> </li><li> <a href="/blog/undefined"></a><div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center"><a href="/blog/undefined"> <img src="https://cdn.cmjornal.pt/images/2023-07/img_590x333$2023_07_18_19_56_12_1397999.jpg" alt="Coronel arrisca pena de prisão por dar alerta à PSP do falso desaparecimento da filha" sizes="(max-width: 800px) 100vw, 800px" width="800" height="600" loading="eager" decoding="sync" class="w-full rounded-md object-cover object-center bg-white"> </a><div><a href="/blog/undefined"></a><a href="https://www.cmjornal.pt" class="text-blue-400 uppercase tracking-wider text-sm font-medium"> CM Jornal </a> <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1"> Coronel arrisca pena de prisão por dar alerta à PSP do falso desaparecimento da filha </h2> <p class="text-gray-500"> Ex-militar brasileiro chegou a falar em rapto e nada disse na queixa à PSP que a mulher afinal tinha deixado o restaurante por vontade própria. </p> <div class="flex gap-2 mt-3"> <a href="https://www.cmjornal.pt/portugal/detalhe/coronel-arrisca-pena-de-prisao-por-dar-alerta-a-psp-do-falso-desaparecimento-da-filha?ref=HP_PrimeirosDestaques" class="text-gray-400" target="_blank">
+Ler Notícia
+</a> </div> </div> </div> </li><li> <a href="/blog/undefined"></a><div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center"><a href="/blog/undefined"> <img src="https://images.impresa.pt/sicnot/2024-09-24-fnam-medicos-joana-bordalo-e-sa-3934dff7" alt="Médicos em greve: FNAM diz que atualizações salariais deviam ter sido inscritas no Orçamento do EstadoSindicato dos Enfermeiros Portugueses &#34;continua à espera&#34; da proposta do GovernoEnfermeiros começam greve de dois dias no continente e Açores" sizes="(max-width: 800px) 100vw, 800px" width="800" height="600" loading="eager" decoding="sync" class="w-full rounded-md object-cover object-center bg-white"> </a><div><a href="/blog/undefined"></a><a href="https://sicnoticias.pt/" class="text-blue-400 uppercase tracking-wider text-sm font-medium"> SIC Notícias </a> <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1"> Médicos em greve: FNAM diz que atualizações salariais deviam ter sido inscritas no Orçamento do EstadoSindicato dos Enfermeiros Portugueses &quot;continua à espera&quot; da proposta do GovernoEnfermeiros começam greve de dois dias no continente e Açores </h2> <p class="text-gray-500"> Os médicos iniciam esta terça-feira uma greve de dois dias para exigir melhores condições laborais, com a Federação Nacional dos Médicos a pedir um ministro que &quot;perceba de saúde e que consiga servir o SNS&quot;. </p> <div class="flex gap-2 mt-3"> <a href="/pais/2024-09-24-fnam-diz-que-atualizacoes-salariais-deviam-ter-sido-inscritas-no-orcamento-do-estado-d8253706?utm_source=sicnot&#38;utm_medium=root&#38;utm_campaign=WEB&#38;utm_content=/pais/2024-09-24-fnam-diz-que-atualizacoes-salariais-deviam-ter-sido-inscritas-no-orcamento-do-estado-d8253706" class="text-gray-400" target="_blank">
+Ler Notícia
+</a> </div> </div> </div> </li><li> <a href="/blog/undefined"></a><div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center"><a href="/blog/undefined"> <img alt="O ataque aos pagers que matou 40 pessoas &#34;corre o risco de alimentar a imaginação&#34;: &#34;o Ocidente tem de ter cuidado&#34; com &#34;computadores, carros, frigoríficos, telemóveis, etc&#34;" sizes="(max-width: 800px) 100vw, 800px" width="800" height="600" loading="lazy" decoding="async" class="w-full rounded-md object-cover object-center bg-white"> </a><div><a href="/blog/undefined"></a><a href="https://cnnportugal.iol.pt/" class="text-blue-400 uppercase tracking-wider text-sm font-medium"> CNN Portugal </a> <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1"> O ataque aos pagers que matou 40 pessoas &quot;corre o risco de alimentar a imaginação&quot;: &quot;o Ocidente tem de ter cuidado&quot; com &quot;computadores, carros, frigoríficos, telemóveis, etc&quot; </h2> <p class="text-gray-500"> &quot;O mundo está muito mais perigoso&quot; depois de um inaudito ataque de Israel que matou dezenas e feriu milhares </p> <div class="flex gap-2 mt-3"> <a href="https://cnnportugal.iol.pt/guerra/ataque/tudo-e-uma-arma-como-o-ataque-aos-pagers-abriu-um-novo-capitulo-na-guerra-hibrida/20240924/66f1cd8dd34ea1acf26eab3b" class="text-gray-400" target="_blank">
+Ler Notícia
+</a> </div> </div> </div> </li><li> <a href="/blog/undefined"></a><div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center"><a href="/blog/undefined"> <img src="https://cdn-images.rtp.pt/icm/noticias/images/e9/e987c942bc2b017cb617fbace1ee815d?w=860&q=90&rect=0,0,1499,822" alt="&#34;Exigimos ministra que perceba de saúde&#34;. Médicos e enfermeiros em greve de dois dias" sizes="(max-width: 800px) 100vw, 800px" width="800" height="600" loading="lazy" decoding="async" class="w-full rounded-md object-cover object-center bg-white"> </a><div><a href="/blog/undefined"></a><a href="https://www.rtp.pt/noticias/" class="text-blue-400 uppercase tracking-wider text-sm font-medium"> RTP Notícias </a> <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1"> &quot;Exigimos ministra que perceba de saúde&quot;. Médicos e enfermeiros em greve de dois dias </h2> <p class="text-gray-500">  </p> <div class="flex gap-2 mt-3"> <a class="text-gray-400" target="_blank">
+Ler Notícia
+</a> </div> </div> </div> </li><li> <a href="/blog/undefined"></a><div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center"><a href="/blog/undefined"> <img src="https://static.euronews.com/articles/stories/08/74/83/40/210x136_cmsv2_03bb9801-d857-5072-bd30-874c002af2b1-8748340.jpg" alt="Benção dos Capacetes com número recorde de motociclistas em Fátima" sizes="(max-width: 800px) 100vw, 800px" width="800" height="600" loading="lazy" decoding="async" class="w-full rounded-md object-cover object-center bg-white"> </a><div><a href="/blog/undefined"></a><a href="https://pt.euronews.com/noticias/europa/portugal" class="text-blue-400 uppercase tracking-wider text-sm font-medium"> Euro News </a> <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1"> Benção dos Capacetes com número recorde de motociclistas em Fátima </h2> <p class="text-gray-500">  </p> <div class="flex gap-2 mt-3"> <a href="https://pt.euronews.com/noticias/europa/portugal/2024/09/23/bencao-dos-capacetes-com-numero-recorde-de-motociclistas-em-fatima" class="text-gray-400" target="_blank">
+Ler Notícia
+</a> </div> </div> </div> </li> </ul> </main>  </div>  <footer class="my-20"> <p class="text-center text-sm text-slate-500">
+Copyright © 2024 Astroship. All rights reserved.
+</p> <!--
+    Can we ask you a favor 🙏
+    Please keep this backlink on your website if possible.
+    or Purchase a commercial license from https://web3templates.com
+  --> <p class="text-center text-xs text-slate-500 mt-1">
+Made by <a href="https://web3templates.com" target="_blank" rel="noopener" class="hover:underline">
+Web3Templates
+</a> </p> </footer>  </body> </html>
