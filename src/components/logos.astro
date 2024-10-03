@@ -1,18 +1,98 @@
 ---
 // @ts-ignore
-import { Icon } from "astro-icon/components";
+import { Picture } from "astro:assets";
+import cmImage from "assets/cm.png";
+import euroImage from "assets/euro.png";
+import cnnImage from "assets/cnn.png";
+import observadorImage from "assets/observador.png";
+import publicoImage from "assets/publico.png";
+import rtpImage from "assets/rtp.png";
+import sicImage from "assets/sic.png";
 ---
 
-<div class="mt-24">
-  <h2 class="text-center text-slate-500">Works with your technologies</h2>
-  <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
+<div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
+  <a href="https://www.cmjornal.pt/">
+    <Picture
+      src={cmImage}
+      alt="Astronaut in the air"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 150px) 150vw, 150px"
+      loading="eager"
+      format="avif"
+      class="rounded-lg"
+    />
+  </a>
 
-    <Icon class="size-8 md:size-12" name="simple-icons:react" />
-    <Icon class="size-8 md:size-12" name="simple-icons:svelte" />
-    <Icon class="size-8 md:size-12" name="simple-icons:astro" />
-    <Icon class="size-8 md:size-16" name="simple-icons:tailwindcss" />
-    <Icon class="size-8 md:size-16" name="simple-icons:alpinedotjs" />
-    <Icon class="size-8 md:size-12" name="simple-icons:vercel" />
+  <a href="https://observador.pt/">
+    <Picture
+        src={observadorImage}
+        alt="Astronaut in the air"
+        widths={[200, 400, 600]}
+        sizes="(max-width: 150px) 150vw, 150px"
+        loading="eager"
+        format="avif"
+      class="rounded-lg"
+      />
+  </a>
 
-  </div>
+  <a href="https://sicnoticias.pt/">
+    <Picture
+      src={sicImage}
+      alt="Astronaut in the air"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 150px) 150vw, 150px"
+      loading="eager"
+      format="avif"
+      class="rounded-lg"
+    />
+  </a>
+
+  <a href="https://www.rtp.pt/noticias/">
+    <Picture
+      src={rtpImage}
+      alt="Astronaut in the air"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 150px) 150vw, 150px"
+      loading="eager"
+      format="avif"
+      class="rounded-lg"
+    />
+  </a>
+
+  <a href="https://cnnportugal.iol.pt/">
+    <Picture
+      src={cnnImage}
+      alt="Astronaut in the air"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 150px) 150vw, 150px"
+      loading="eager"
+      format="avif"
+      class="rounded-lg"
+    />
+  </a>
+
+  <a href="https://pt.euronews.com/noticias/europa/portugal">
+    <Picture
+      src={euroImage}
+      alt="Astronaut in the air"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 150px) 150vw, 150px"
+      loading="eager"
+      format="avif"
+      class="rounded-lg"
+    />
+  </a>
+
+  <a href="https://www.publico.pt/">
+    <Picture
+      src={publicoImage}
+      alt="Astronaut in the air"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 150px) 150vw, 150px"
+      loading="eager"
+      format="avif"
+      class="rounded-lg"
+    />
+  </a>
+
 </div>
