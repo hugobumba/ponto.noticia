@@ -1,0 +1,42 @@
+[
+  {
+    "sourceName": "SIC Notícias",
+    "sourceUrl": "https://sicnoticias.pt",
+    "title": "Ucrânia e EUA preparam nova reunião após encontro na Casa Branca",
+    "desc": "Numa chamada com o conselheiro da segurança nacional norte-americana, Andriy Yermak diz que foram discutidos os próximos passos para uma paz justa e duradoura. O Presidente ucraniano, Volodymyr Zelensky, confirmou a ligação entre as duas partes.",
+    "img": "./src/assets/pn_logo.png",
+    "link": "https://sicnoticias.pt/especiais/guerra-russia-ucrania/2025-03-05-video-ucrania-e-eua-preparam-nova-reuniao-apos-encontro-na-casa-branca-add85d71?utm_source=sicnot&utm_medium=root&utm_campaign=WEB&utm_content=/especiais/guerra-russia-ucrania/2025-03-05-video-ucrania-e-eua-preparam-nova-reuniao-apos-encontro-na-casa-branca-add85d71"
+  },
+  {
+    "sourceName": "CNN Portugal",
+    "sourceUrl": "https://cnnportugal.iol.pt/",
+    "title": "EUA estão a reconsiderar suspensão do apoio à Ucrânia. Macron abre debate para estender o \"guarda-chuva\" nuclear francês ao parceiros europeus",
+    "desc": "",
+    "img": "https://img.iol.pt/image/id/678be0abd34ea1acf27305c0/480.jpg",
+    "link": "https://cnnportugal.iol.pt/aominuto/6207bf6c0cf2cc58e7e276ff"
+  },
+  {
+    "sourceName": "RTP Notícias",
+    "sourceUrl": "https://www.rtp.pt/noticias/",
+    "title": "PR vai ouvir partidos se moção de confiança for rejeitada e aponta para eleições em maio",
+    "desc": "",
+    "img": "https://cdn-images.rtp.pt/icm/noticias/images/86/86963315e82d2bb5257552c51c21ac90?w=860&q=90&rect=0,0,1499,822",
+    "link": " https://www.rtp.pt/noticias/politica/marcelo-vai-ouvir-partidos-se-mocao-de-confianca-for-rejeitada-e-aponta-para-eleicoes-em-maio_n1638672 "
+  },
+  {
+    "sourceName": "Euro News",
+    "sourceUrl": "https://pt.euronews.com/noticias/europa/portugal",
+    "title": "Folia, matrafonas e 50 anos de liberdade no Carnaval de Torres Vedras",
+    "desc": "",
+    "img": "https://static.euronews.com/articles/stories/09/09/41/50/210x136_cmsv2_024a40ce-366f-5e7e-beb3-b52faf8d034a-9094150.jpg",
+    "link": "https://pt.euronews.com/noticias/europa/portugal/cultura/2025/03/05/folia-matrafonas-e-50-anos-de-liberdade-no-carnaval-de-torres-vedras"
+  },
+  {
+    "sourceName": "Público",
+    "sourceUrl": "https://www.publico.pt",
+    "title": "Censura e confiança chumbadas: Governo cai na próxima semana e há eleições em Maio",
+    "desc": "",
+    "img": "https://imagens.publico.pt/s3/files/1000/730/1982730.jpg?v=37",
+    "link": "https://www.publico.pt/2025/03/05/politica/noticia/censura-confianca-chumbadas-governo-cai-daqui-dias-pais-segue-eleicoes-maio-2124848"
+  }
+]
