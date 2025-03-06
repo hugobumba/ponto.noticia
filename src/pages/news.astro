@@ -9,7 +9,7 @@ import Sectionhead from "@components/sectionhead.astro";
 //const fileContents = fs.readFileSync(jsonPath, 'utf-8');
 //const allBlogEntries = JSON.parse(fileContents);
 // Fazer fetch das notícias da API
-const apiUrl = import.meta.env.SERVER_API_URL || 'http://localhost:3000/api/news';
+const apiUrl = import.meta.env.SERVER_API_URL; //|| 'http://localhost:3000/api/news';
 const response = await fetch(apiUrl);
 const allBlogEntries = await response.json();
 ---
