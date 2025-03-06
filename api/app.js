@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // Read JSON file from 'data' folder
 function getNews() {
-    const filePath = path.join(__dirname, 'data', 'news.json'); // Apontar para a pasta 'data'
+    const filePath = path.join(__dirname, '../public/data', 'news.json'); // Apontar para a pasta 'data'
     
     const data = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(data);

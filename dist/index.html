@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.18"><!-- <link rel="preload" as="image" href={src} alt="Hero" /> --><title>Início | Ponto.Notícia</title><link rel="canonical" href="https://astroship.web3templates.com/"><meta name="description" content="Astroship is a starter website template for Astro built with TailwindCSS."><meta name="robots" content="index, follow"><meta property="og:title" content="Astroship - Starter Template for Astro"><meta property="og:type" content="website"><meta property="og:image" content="https://astroship.web3templates.com/opengraph.jpg"><meta property="og:url" content="https://astroship.web3templates.com/"><meta property="og:image:url" content="https://astroship.web3templates.com/opengraph.jpg"><meta property="og:image:alt" content="Astroship Homepage Screenshot"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@web3templates"><meta name="twitter:creator" content="@surjithctly"><link rel="stylesheet" href="/_astro/about.Dw4CvVWT.css"></head> <body> <div class="max-w-screen-xl mx-auto px-5">  <header class="flex flex-col lg:flex-row justify-between items-center my-5">  <div class="flex w-full lg:w-auto items-center justify-between"> <a href="/" class="text-lg"><span class="font-bold text-slate-800">Ponto</span><span style="color: red" class="font-bold text-slate-800">.</span><span>Notícia</span></a> <div class="block lg:hidden"> <button id="astronav-menu" aria-label="Toggle Menu">  <svg fill="currentColor" class="w-4 h-4 text-gray-800" width="24" height="24" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"> <title>Toggle Menu</title> <path class="astronav-close-icon astronav-toggle hidden" fill-rule="evenodd" clip-rule="evenodd" d="M18.278 16.864a1 1 0 01-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 01-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 011.414-1.414l4.829 4.828 4.828-4.828a1 1 0 111.414 1.414l-4.828 4.829 4.828 4.828z"></path> <path class="astronav-open-icon astronav-toggle" fill-rule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"></path> </svg>  </button> </div> </div> <nav class="astronav-items astronav-toggle hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">  <ul class="flex flex-col lg:flex-row lg:gap-3"> <li> <a href="/" class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900"> <span> Início</span>  </a> </li><li> <a href="/news" class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900"> <span> Notícias</span>  </a> </li> </ul>  </nav>  <script>(function(){const closeOnClick = false;
+
+["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+  document.addEventListener(event, addListeners);
+});
+
+// Function to clone and replace elements
+function cloneAndReplace(element) {
+  const clone = element.cloneNode(true);
+  element.parentNode.replaceChild(clone, element);
+}
+
+function addListeners() {
+  // Clean up existing listeners
+  const oldMenuButton = document.getElementById("astronav-menu");
+  if (oldMenuButton) {
+    cloneAndReplace(oldMenuButton);
+  }
+
+  const oldDropdownMenus = document.querySelectorAll(".astronav-dropdown");
+  oldDropdownMenus.forEach((menu) => {
+    cloneAndReplace(menu);
+  });
+
+  // Mobile nav toggle
+  const menuButton = document.getElementById("astronav-menu");
+  menuButton && menuButton.addEventListener("click", toggleMobileNav);
+
+  // Dropdown menus
+  const dropdownMenus = document.querySelectorAll(".astronav-dropdown");
+  dropdownMenus.forEach((menu) => {
+    const button = menu.querySelector("button");
+    button &&
+      button.addEventListener("click", (event) =>
+        toggleDropdownMenu(event, menu, dropdownMenus)
+      );
+
+    // Handle Submenu Dropdowns
+    const dropDownSubmenus = menu.querySelectorAll(
+      ".astronav-dropdown-submenu"
+    );
+
+    dropDownSubmenus.forEach((submenu) => {
+      const submenuButton = submenu.querySelector("button");
+      submenuButton &&
+        submenuButton.addEventListener("click", (event) => {
+          event.stopImmediatePropagation();
+          toggleSubmenuDropdown(event, submenu);
+        });
+    });
+  });
+
+  // Clicking away from dropdown will remove the dropdown class
+  document.addEventListener("click", closeAllDropdowns);
+
+  if (closeOnClick) {
+    handleCloseOnClick();
+  }
+}
+
+function toggleMobileNav() {
+  [...document.querySelectorAll(".astronav-toggle")].forEach((el) => {
+    el.classList.toggle("hidden");
+  });
+}
+
+function toggleDropdownMenu(event, menu, dropdownMenus) {
+  toggleMenu(menu);
+
+  // Close one dropdown when selecting another
+  Array.from(dropdownMenus)
+    .filter((el) => el !== menu && !menu.contains(el))
+    .forEach(closeMenu);
+
+  event.stopPropagation();
+}
+
+function toggleSubmenuDropdown(event, submenu) {
+  event.stopPropagation();
+  toggleMenu(submenu);
+
+  // Close sibling submenus at the same nesting level
+  const siblingSubmenus = submenu
+    .closest(".astronav-dropdown")
+    .querySelectorAll(".astronav-dropdown-submenu");
+  Array.from(siblingSubmenus)
+    .filter((el) => el !== submenu && !submenu.contains(el))
+    .forEach(closeMenu);
+}
+
+function closeAllDropdowns(event) {
+  const dropdownMenus = document.querySelectorAll(".dropdown-toggle");
+  const dropdownParent = document.querySelectorAll(
+    ".astronav-dropdown, .astronav-dropdown-submenu"
+  );
+  const isButtonInsideDropdown = [
+    ...document.querySelectorAll(
+      ".astronav-dropdown button, .astronav-dropdown-submenu button, #astronav-menu"
+    ),
+  ].some((button) => button.contains(event.target));
+  if (!isButtonInsideDropdown) {
+    dropdownMenus.forEach((d) => {
+      // console.log("I ran", d);
+      // if (!d.contains(event.target)) {
+      d.classList.remove("open");
+      d.removeAttribute("open");
+      d.classList.add("hidden");
+      // }
+    });
+    dropdownParent.forEach((d) => {
+      d.classList.remove("open");
+      d.removeAttribute("open");
+      d.setAttribute("aria-expanded", "false");
+    });
+  }
+}
+
+function toggleMenu(menu) {
+  menu.classList.toggle("open");
+  const expanded = menu.getAttribute("aria-expanded") === "true";
+  menu.setAttribute("aria-expanded", expanded ? "false" : "true");
+  menu.hasAttribute("open")
+    ? menu.removeAttribute("open")
+    : menu.setAttribute("open", "");
+
+  const dropdownToggle = menu.querySelector(".dropdown-toggle");
+  const dropdownExpanded = dropdownToggle.getAttribute("aria-expanded");
+  dropdownToggle.classList.toggle("hidden");
+  dropdownToggle.setAttribute(
+    "aria-expanded",
+    dropdownExpanded === "true" ? "false" : "true"
+  );
+}
+
+function closeMenu(menu) {
+  // console.log("closing", menu);
+  menu.classList.remove("open");
+  menu.removeAttribute("open");
+  menu.setAttribute("aria-expanded", "false");
+  const dropdownToggles = menu.querySelectorAll(".dropdown-toggle");
+  dropdownToggles.forEach((toggle) => {
+    toggle.classList.add("hidden");
+    toggle.setAttribute("aria-expanded", "false");
+  });
+}
+
+function handleCloseOnClick() {
+  const navMenuItems = document.querySelector(".astronav-items");
+  const navToggle = document.getElementById("astronav-menu");
+  const navLink = navMenuItems && navMenuItems.querySelectorAll("a");
+
+  const MenuIcons = navToggle.querySelectorAll(".astronav-toggle");
+
+  navLink &&
+    navLink.forEach((item) => {
+      item.addEventListener("click", () => {
+        navMenuItems?.classList.add("hidden");
+        MenuIcons.forEach((el) => {
+          el.classList.toggle("hidden");
+        });
+      });
+    });
+}
+})();</script> </header>  </div>  <div class="max-w-screen-xl mx-auto px-5">  <main class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24"> <div class="py-6 md:order-1 hidden md:block"> <picture> <source srcset="/_astro/hero.DlKDY3ml_C3Yxn.webp 200w, /_astro/hero.DlKDY3ml_Z2lV4Yd.webp 400w, /_astro/hero.DlKDY3ml_Z1VhsC8.webp 600w" type="image/webp" sizes="(max-width: 800px) 100vw, 620px"> <img src="/_astro/hero.DlKDY3ml_1b0qtt.png" srcset="/_astro/hero.DlKDY3ml_Zb8dUS.png 200w, /_astro/hero.DlKDY3ml_1U3Pls.png 400w, /_astro/hero.DlKDY3ml_1b0qtt.png 600w" alt="Astronaut in the air" sizes="(max-width: 800px) 100vw, 620px" loading="eager" width="520" height="424" decoding="async"> </picture> </div> <div> <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
+Confira as notícas em alta no país.
+</h1> <p class="text-lg mt-4 text-slate-600 max-w-xl">
+Este website recolhe as informações que estão em alta nos principais veículos de comunicação do país, com atualizações em tempo real. Pode receber também as notícas por e-mail.
+</p> <div class="mt-6 flex flex-col sm:flex-row gap-3"> <a href="/news" rel="noopener" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-black text-white hover:bg-gray-800  border-2 border-transparent flex gap-1 items-center justify-center">
+Ver Notícias
+ </a> <a href="#" rel="noopener" target="_blank" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white border-2 border-black hover:bg-gray-100 text-black  flex gap-1 items-center justify-center">
+Receber por E-mail
+ </a> </div> </div> </main> <div class="mt-16 md:mt-0"> <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
+Os principais portais de notícias
+</h2> <p class="text-lg mt-4 text-slate-600">
+O conteúdo das notícias é diretamente extraído de alguns dos principais veículos de comunicação credíveis de Portugal.
+</p> </div> <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap"> <a href="https://www.cmjornal.pt/"> <picture> <source srcset="/_astro/cm.D6kfU7iJ_Zo7IJa.webp 200w, /_astro/cm.D6kfU7iJ_Zo7IJa.webp 400w, /_astro/cm.D6kfU7iJ_Zo7IJa.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/cm.D6kfU7iJ_1gJHvD.png" srcset="/_astro/cm.D6kfU7iJ_1gJHvD.png 200w, /_astro/cm.D6kfU7iJ_1gJHvD.png 400w, /_astro/cm.D6kfU7iJ_1gJHvD.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> <a href="https://observador.pt/"> <picture> <source srcset="/_astro/observador.D4jOarRb_ZF0QKE.webp 200w, /_astro/observador.D4jOarRb_ZF0QKE.webp 400w, /_astro/observador.D4jOarRb_ZF0QKE.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/observador.D4jOarRb_ZiykhV.png" srcset="/_astro/observador.D4jOarRb_ZiykhV.png 200w, /_astro/observador.D4jOarRb_ZiykhV.png 400w, /_astro/observador.D4jOarRb_ZiykhV.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> <a href="https://sicnoticias.pt/"> <picture> <source srcset="/_astro/sic.CoVsPucs_22zCkq.webp 200w, /_astro/sic.CoVsPucs_22zCkq.webp 400w, /_astro/sic.CoVsPucs_22zCkq.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/sic.CoVsPucs_Z27r6CW.png" srcset="/_astro/sic.CoVsPucs_Z27r6CW.png 200w, /_astro/sic.CoVsPucs_Z27r6CW.png 400w, /_astro/sic.CoVsPucs_Z27r6CW.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> <a href="https://www.rtp.pt/noticias/"> <picture> <source srcset="/_astro/rtp.DOsPlGhK_ZJr0SC.webp 200w, /_astro/rtp.DOsPlGhK_ZJr0SC.webp 400w, /_astro/rtp.DOsPlGhK_ZJr0SC.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/rtp.DOsPlGhK_aInVV.png" srcset="/_astro/rtp.DOsPlGhK_aInVV.png 200w, /_astro/rtp.DOsPlGhK_aInVV.png 400w, /_astro/rtp.DOsPlGhK_aInVV.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> <a href="https://cnnportugal.iol.pt/"> <picture> <source srcset="/_astro/cnn.-dwkQaab_1SNbiO.webp 200w, /_astro/cnn.-dwkQaab_1SNbiO.webp 400w, /_astro/cnn.-dwkQaab_1SNbiO.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/cnn.-dwkQaab_Z2gdxEy.png" srcset="/_astro/cnn.-dwkQaab_Z2gdxEy.png 200w, /_astro/cnn.-dwkQaab_Z2gdxEy.png 400w, /_astro/cnn.-dwkQaab_Z2gdxEy.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> <a href="https://pt.euronews.com/noticias/europa/portugal"> <picture> <source srcset="/_astro/euro.BRjEreTx_Z1OqE2m.webp 200w, /_astro/euro.BRjEreTx_Z1OqE2m.webp 400w, /_astro/euro.BRjEreTx_Z1OqE2m.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/euro.BRjEreTx_1hQf4f.png" srcset="/_astro/euro.BRjEreTx_1hQf4f.png 200w, /_astro/euro.BRjEreTx_1hQf4f.png 400w, /_astro/euro.BRjEreTx_1hQf4f.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> <a href="https://www.publico.pt/"> <picture> <source srcset="/_astro/publico.B_f-o6BC_Z155lMK.webp 200w, /_astro/publico.B_f-o6BC_Z155lMK.webp 400w, /_astro/publico.B_f-o6BC_Z155lMK.webp 600w" type="image/webp" sizes="(max-width: 150px) 150vw, 150px"> <img src="/_astro/publico.B_f-o6BC_1i8iOy.png" srcset="/_astro/publico.B_f-o6BC_1i8iOy.png 200w, /_astro/publico.B_f-o6BC_1i8iOy.png 400w, /_astro/publico.B_f-o6BC_1i8iOy.png 600w" alt="Astronaut in the air" sizes="(max-width: 150px) 150vw, 150px" loading="eager" class="rounded-lg" width="100" height="100" decoding="async"> </picture> </a> </div> <div class="bg-black p-8 md:px-20 md:py-20 mt-20 mx-auto max-w-5xl rounded-lg flex flex-col items-center text-center"> <h2 class="text-white text-4xl md:text-6xl tracking-tight">
+Receba as notícias por e-mail.
+</h2> <p class="text-slate-400 mt-4 text-lg md:text-xl">
+Esteja sempre por dentro das notícias através da sua caixa de correio de e-mail.
+</p> <div class="flex mt-5"> <a href="#" class="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black   border-2 border-transparent">Subscrever </a> </div> </div>  </div>  <footer class="my-20"> <p class="text-center text-sm text-slate-500">
+Copyright © 2025 Ponto.Notícia. All rights reserved.
+</p> </footer>  </body> </html>

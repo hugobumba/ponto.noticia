@@ -9,7 +9,7 @@ const scrapeRtp = require('./scrapers/scrapeRtp');
 const scrapeEuroNews = require('./scrapers/scrapeEuroNews');
 
 async function mainScraper() {
-    const jsonFilePath = path.join(__dirname, './data', 'news.json');
+    const jsonFilePath = path.join(__dirname, './public/data', 'news.json');
 
     const results = await Promise.all([
         scrapeCmJornal(),
@@ -23,8 +23,8 @@ async function mainScraper() {
 
     const allNews = results.flat();
 
-    if (!fs.existsSync(path.join(__dirname, './data'))) {
-        fs.mkdirSync(path.join(__dirname, './data'));
+    if (!fs.existsSync(path.join(__dirname, './public/data'))) {
+        fs.mkdirSync(path.join(__dirname, './public/data'));
     }
 
     fs.writeFileSync(jsonFilePath, JSON.stringify(allNews, null, 2), 'utf-8');
