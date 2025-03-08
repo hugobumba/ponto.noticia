@@ -21,3 +21,9 @@ primary_region = 'mad'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 1024
+
+[scheduled_jobs]
+  [[scheduled_jobs.jobs]]
+  name = "my-cron-job"
+  cron = "0 * * * *"  # Executa a cada 1 hora
+  task = "node /path/to/your/script.js"  # Caminho para o seu script
