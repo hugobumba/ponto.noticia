@@ -10,7 +10,7 @@ import Sectionhead from "@components/sectionhead.astro";
 //const allBlogEntries = JSON.parse(fileContents);
 
 // Fazer fetch das notícias da API
-const apiUrl = "https://api-news-portugal.onrender.com/api/news"
+const apiUrl = "https://api-news.up.railway.app/api/news"
 const response = await fetch(apiUrl);
 const allBlogEntries = await response.json();
 ---
