@@ -24,6 +24,6 @@ primary_region = 'mad'
 
 [scheduled_jobs]
   [[scheduled_jobs.jobs]]
-  name = "my-cron-job"
-  cron = "0 * * * *"  # Executa a cada 1 hora
-  task = "node /path/to/your/script.js"  # Caminho para o seu script
+  name = "Auto Scrape"
+  cron = "0 * * * *"
+  task = "npm start"
